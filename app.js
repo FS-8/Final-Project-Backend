@@ -1,25 +1,24 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
-const app = express();;
+const app = express();
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
-const db = require("./Config/db")
-const allRoutes = require("./Routes")
+const db = require("./config/db");
+const allRoutes = require("./routes");
 
 db.then(() => {
-    console.log("Berhasil Connect Ke MongoDB")
-})
-.catch(() => {
-    console.log("gagal konek ke mongoDB")
-})
+  console.log("Berhasil Connect Ke MongoDB");
+}).catch(() => {
+  console.log("gagal konek ke mongoDB");
+});
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 //diambil dari index.js
-app.use(allRoutes)
+app.use(allRoutes);
 
-app.listen(PORT, () =>{
-    console.log("server running on port " + PORT)
-})
+app.listen(PORT, () => {
+  console.log("server running on port " + PORT);
+});
