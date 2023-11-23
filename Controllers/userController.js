@@ -27,7 +27,7 @@ module.exports = {
         if (passwordMatch) {
           const token = jwt.sign(
             { id: user._id, email: user.email },
-            domainExpansion
+            "domainExpansion"
           );
           res.status(200).json({
             message: "Login Successfully",

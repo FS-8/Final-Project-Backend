@@ -8,6 +8,7 @@ const {
   deleteProductFromCart,
   userCheckout,
 } = require("../Controllers/userController");
+const verifyToken = require("../Middleware/jwtToken");
 const route = express.Router();
 
 route.post("/register", register);

@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
     const token = header.split(" ")[1];
     if (!token) throw new Error("There is no token");
 
-    const user = jwt.verify(token, domainExpansion);
+    const user = jwt.verify(token, "domainExpansion");
 
     req.user = user;
     next();
