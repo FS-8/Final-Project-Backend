@@ -1,10 +1,9 @@
-const Product = require("../models/product");
+const Product = require("../Models/product");
 
 module.exports = {
   getAllProduct: async (req, res) => {
     try {
       const products = await Product.find();
-
       res.status(200).json({
         message: "Berhasil mendapatkan product",
         data: products,
@@ -38,9 +37,11 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
-  editProduct: async (req, res) => {
+  editProductById: async (req, res) => {
     try {
-      const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
       if (product) {
         res.status(200).json({
           message: "Berhasil mengedit data product",
@@ -53,7 +54,7 @@ module.exports = {
       res.status(500).json({ message: err.message });
     }
   },
-  deleteProduct: async (req, res) => {
+  deleteProductById: async (req, res) => {
     try {
       const product = await Product.findByIdAndDelete(req.params.id);
       if (product) {
@@ -68,19 +69,15 @@ module.exports = {
       res.status(500).json({ message: err.message });
     }
   },
-  deleteAllProduct: async (req, res) => {
+  getProductsByCategory: async (req, res) => {
     try {
-      const product = await Product.deleteMany();
-      if (product.deletedCount > 0) {
-        res.status(200).json({
-          message: "Berhasil menghapus semua data product",
-          data: product,
-        });
-      } else {
-        res.status(404).json({ message: "No products to delete" });
-      }
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+      const category = req.params.category;
+      const products = await Product.find({ category });
+
+      res.status(200).json(products);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
 };

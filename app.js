@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const db = require("./config/db");
-const allRoutes = require("./routes");
+const allRoutes = require("./Routers");
 
 db.then(() => {
   console.log("Berhasil Connect Ke MongoDB");
