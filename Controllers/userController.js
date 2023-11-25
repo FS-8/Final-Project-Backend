@@ -1,4 +1,4 @@
-const User = require("../Models/user");
+const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -25,10 +25,7 @@ module.exports = {
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (passwordMatch) {
-          const token = jwt.sign(
-            { id: user._id, email: user.email },
-            "domainExpansion"
-          );
+          const token = jwt.sign({ id: user._id, email: user.email }, "domainExpansion");
           res.status(200).json({
             message: "Login Successfully",
             name: user.name,
@@ -58,9 +55,7 @@ module.exports = {
         new: true,
       });
       if (updatedUser) {
-        res
-          .status(200)
-          .json({ message: "User updated successfully", data: updatedUser });
+        res.status(200).json({ message: "User updated successfully", data: updatedUser });
       } else {
         res.status(404).json({ message: "User not found" });
       }
@@ -82,9 +77,7 @@ module.exports = {
       }
 
       // Tambah product ke keranjang atau update quantity jika sudah ada
-      const existingProduct = user.cart.find((item) =>
-        item.product.equals(productId)
-      );
+      const existingProduct = user.cart.find((item) => item.product.equals(productId));
       if (existingProduct) {
         existingProduct.quantity += quantity;
       } else {
@@ -92,9 +85,7 @@ module.exports = {
       }
 
       await user.save();
-      res
-        .status(201)
-        .json({ message: "Product added to cart successfully", user });
+      res.status(201).json({ message: "Product added to cart successfully", user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
@@ -129,9 +120,7 @@ module.exports = {
       user.cart = user.cart.filter((item) => !item.product.equals(productId));
       await user.save();
 
-      res
-        .status(200)
-        .json({ message: "Product removed from cart successfully", user });
+      res.status(200).json({ message: "Product removed from cart successfully", user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
