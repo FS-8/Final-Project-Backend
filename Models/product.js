@@ -13,13 +13,28 @@ const productSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please Enter product Price"],
   },
-  images: [],
+  images: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   category: {
     type: String,
     required: [true, "Please Enter Product Category"],
   },
-  colors: [],
-  sizes: [],
+  colors: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  sizes: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

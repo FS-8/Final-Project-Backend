@@ -47,8 +47,34 @@ module.exports = {
       res.status(400).json({ message: error.message });
     }
   },
+  getAllUser: async (req, res) => {
+    try {
+      const users = await User.find();
+
+      res.status(200).json({
+        message: "Berhasil mendapatkan user",
+        data: users,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Gagal Melihat All User",
+      });
+    }
+  },
+  getUserById: async (req, res) => {
+    try {
+      const id = req.params.userId;
+      const user = await User.findById(id);
+      res.status(200).json({
+        message: "Berhasil mendapatkan user by id",
+        data: user,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
   editUser: async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params.userId;
     const { name, email, password } = req.body;
     try {
       const updateFields = { name, email };

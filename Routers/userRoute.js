@@ -7,10 +7,14 @@ const {
   getListCart,
   deleteProductFromCart,
   userCheckout,
+  getAllUser,
+  getUserById,
 } = require("../Controllers/userController");
 const verifyToken = require("../Middleware/jwtToken");
 const route = express.Router();
 
+route.get("/", getAllUser);
+route.get("/:userId", getUserById);
 route.post("/register", register);
 route.post("/login", login);
 route.post("/:userId", editUser);

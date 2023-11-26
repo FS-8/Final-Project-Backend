@@ -1,9 +1,11 @@
+const User = require("../Models/user");
 const Product = require("../Models/product");
+const Order = require("../Models/order");
 
 module.exports = {
   getAllProduct: async (req, res) => {
     try {
-      const products = await Product.find();
+      let products = await Product.find();
       res.status(200).json({
         message: "Berhasil mendapatkan product",
         data: products,
@@ -16,11 +18,11 @@ module.exports = {
   },
   getProductById: async (req, res) => {
     try {
-      const id = req.params.id;
-      const product = await Product.findById(id);
+      const id = req.params.productId;
+      const data = await Product.findById(id);
       res.status(200).json({
         message: "Berhasil mendapatkan product by id",
-        data: product,
+        data: data,
       });
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -32,6 +34,7 @@ module.exports = {
       await Product.create(data);
       res.status(200).json({
         message: "Berhasil membuat data product",
+        data,
       });
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -39,9 +42,13 @@ module.exports = {
   },
   editProductById: async (req, res) => {
     try {
-      const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
+      const product = await Product.findByIdAndUpdate(
+        req.params.productId,
+        req.body,
+        {
+          new: true,
+        }
+      );
       if (product) {
         res.status(200).json({
           message: "Berhasil mengedit data product",
@@ -56,7 +63,7 @@ module.exports = {
   },
   deleteProductById: async (req, res) => {
     try {
-      const product = await Product.findByIdAndDelete(req.params.id);
+      const product = await Product.findByIdAndDelete(req.params.productId);
       if (product) {
         res.status(200).json({
           message: "Berhasil menghapus data product by id",
