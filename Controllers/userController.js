@@ -12,7 +12,7 @@ module.exports = {
       const user = await User.create({ name, email, password: hashedPassword });
       res.status(200).json({
         message: "Berhasil membuat data user",
-        data: user,
+        user,
       });
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -53,7 +53,7 @@ module.exports = {
 
       res.status(200).json({
         message: "Berhasil mendapatkan user",
-        data: users,
+        users,
       });
     } catch (error) {
       res.status(500).json({
@@ -67,7 +67,7 @@ module.exports = {
       const user = await User.findById(id);
       res.status(200).json({
         message: "Berhasil mendapatkan user by id",
-        data: user,
+        user,
       });
     } catch (error) {
       res.status(400).json({ error: error.message });

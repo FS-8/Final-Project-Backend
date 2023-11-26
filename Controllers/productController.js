@@ -8,7 +8,7 @@ module.exports = {
       let products = await Product.find();
       res.status(200).json({
         message: "Berhasil mendapatkan product",
-        data: products,
+        products,
       });
     } catch (error) {
       res.status(500).json({
@@ -22,7 +22,7 @@ module.exports = {
       const data = await Product.findById(id);
       res.status(200).json({
         message: "Berhasil mendapatkan product by id",
-        data: data,
+        data,
       });
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -67,7 +67,7 @@ module.exports = {
       if (product) {
         res.status(200).json({
           message: "Berhasil menghapus data product by id",
-          data: product,
+          product,
         });
       } else {
         res.status(404).json({ message: "Product not found" });
