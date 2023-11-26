@@ -10,12 +10,17 @@ const orderSchema = new mongoose.Schema({
         required: true,
       },
       quantity: { type: Number, default: 1 },
+      selectedColor: { type: String }, // Tambahkan properti pemilihan warna
+      selectedSize: { type: String }, // Tambahkan properti pemilihan ukuran
     },
   ],
+  country: { type: String },
+  phone: { type: String },
   address: { type: String },
-  postalCode: { type: String },
+  kodePos: { type: String },
   email: { type: String },
   paymentMethod: { type: String },
+  // tambahkan properti lain sesuai kebutuhan
 });
 
 const Order = mongoose.model("Order", orderSchema);

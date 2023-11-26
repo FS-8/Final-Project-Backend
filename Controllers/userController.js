@@ -1,4 +1,6 @@
 const User = require("../Models/user");
+const Product = require("../Models/product");
+const Order = require("../Models/order");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -154,8 +156,10 @@ module.exports = {
           product: item.product._id,
           quantity: item.quantity,
         })),
+        country: user.country,
         address: user.address,
-        postalCode: user.postalCode,
+        phone: user.phone,
+        kodePos: user.kodePos,
         email: user.email,
         paymentMethod: req.body.paymentMethod,
         // tambahkan properti lain sesuai kebutuhan

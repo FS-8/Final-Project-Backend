@@ -18,6 +18,14 @@ const productSchema = mongoose.Schema({
     type: String,
     required: [true, "Please Enter Product Category"],
   },
+  colors: {
+    type: String,
+    required: [true, "Please Enter Product color"],
+  },
+  sizes: {
+    type: String,
+    required: [true, "Please Enter Product size"],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
