@@ -23,6 +23,9 @@ const productSchema = mongoose.Schema({
     type: String,
     required: [true, "Please Enter Product Category"],
   },
+  brand: {
+    type: String,
+  },
   colors: [
     {
       type: String,
