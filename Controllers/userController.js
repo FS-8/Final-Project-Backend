@@ -28,7 +28,9 @@ module.exports = {
       // Simpan user ke database
       await newUser.save();
 
-      res.status(201).json({ message: "User registered successfully" });
+      res
+        .status(201)
+        .json({ message: "User registered successfully", newUser });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error" });
@@ -91,7 +93,7 @@ module.exports = {
   },
   editUser: async (req, res) => {
     try {
-      const userId = req.params.id; // Ambil ID user dari parameter URL
+      const userId = req.params.userId; // Ambil ID user dari parameter URL
       const updatedUserData = req.body;
 
       // Hash password jika ada perubahan password
@@ -119,38 +121,6 @@ module.exports = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
-  // Menambah product ke keranjang
-  addProductToCart: async (req, res) => {
-    try {
-      const { userId, productId, quantity } = req.body;
-
-      // Validasi userId dan productId
-      const user = await User.findById(userId);
-      const product = await Product.findById(productId);
-
-      if (!user || !product) {
-        return res.status(404).json({ error: "User or product not found" });
-      }
-
-      // Tambah product ke keranjang atau update quantity jika sudah ada
-      const existingProduct = user.cart.find((item) =>
-        item.product.equals(productId)
-      );
-      if (existingProduct) {
-        existingProduct.quantity += quantity;
-      } else {
-        user.cart.push({ product: productId, quantity });
-      }
-
-      await user.save();
-      res
-        .status(201)
-        .json({ message: "Product added to cart successfully", user });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
   // Mendapatkan list keranjang
   getListCart: async (req, res) => {
     try {
@@ -162,63 +132,6 @@ module.exports = {
       }
 
       res.status(200).json(user.cart);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
-  // Menghapus product dari keranjang
-  deleteProductFromCart: async (req, res) => {
-    try {
-      const { userId, productId } = req.params;
-      const user = await User.findById(userId);
-
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      user.cart = user.cart.filter((item) => !item.product.equals(productId));
-      await user.save();
-
-      res
-        .status(200)
-        .json({ message: "Product removed from cart successfully", user });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
-  // User Melakukan Checkout
-  userCheckout: async (req, res) => {
-    try {
-      const userId = req.params.userId;
-      const user = await User.findById(userId).populate("cart.product");
-
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      // Buat order baru
-      const newOrder = new Order({
-        user: userId,
-        products: user.cart.map((item) => ({
-          product: item.product._id,
-          quantity: item.quantity,
-        })),
-        country: user.country,
-        address: user.address,
-        phone: user.phone,
-        kodePos: user.kodePos,
-        email: user.email,
-        paymentMethod: req.body.paymentMethod,
-        // tambahkan properti lain sesuai kebutuhan
-      });
-
-      // Kosongkan keranjang setelah checkout
-      user.cart = [];
-      await Promise.all([newOrder.save(), user.save()]);
-
-      res.status(201).json({ message: "Checkout successful", order: newOrder });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });

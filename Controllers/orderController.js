@@ -41,28 +41,37 @@ module.exports = {
   },
   createOrder: async (req, res) => {
     try {
-      const { userId, products } = req.body;
+      const { user, products, paymentMethod } = req.body;
 
-      // Pastikan userId dan products tersedia dalam request body
-      if (!userId || !products || products.length === 0) {
+      // Validasi input
+      if (!user || !Array.isArray(products) || products.length === 0) {
         return res.status(400).json({ message: "Invalid request body" });
+      }
+
+      // Validasi setiap produk dalam array
+      for (const product of products) {
+        if (!product.product || !product.quantity || !product.price) {
+          return res
+            .status(400)
+            .json({ message: "Invalid product details in the request body" });
+        }
       }
 
       // Buat objek order baru
       const newOrder = new Order({
-        user: userId,
+        user,
         products,
+        paymentMethod,
+        // tambahkan properti lain sesuai kebutuhan
       });
 
       // Simpan order ke database
       await newOrder.save();
 
-      return res
-        .status(201)
-        .json({ message: "Order created successfully", order: newOrder });
+      res.status(201).json({ message: "Order created successfully", newOrder });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" });
     }
   },
 };

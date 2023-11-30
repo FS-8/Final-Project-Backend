@@ -21,10 +21,6 @@ route.post("/login", login);
 
 route.put("/:userId", editUser);
 
-route.post("/cart", verifyToken, addProductToCart);
 route.get("/cart/:userId", getListCart);
-route.delete("/cart/:userid/:productId", deleteProductFromCart);
-
-route.post("/checkout/:userId", userCheckout);
 
 module.exports = route;
