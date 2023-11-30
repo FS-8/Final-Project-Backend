@@ -54,33 +54,33 @@ Pastikan Anda telah menginstal Node.js, Express, dan Mongoose.
 - `address` (String): Alamat Pengguna.
 - `kodePos` (String): Kode pos Pengguna.
 
-### **Rute Pesanan**
+### **Rute Order**
 
-- `GET /api/pesanan`: Dapatkan semua pesanan.
-- `GET /api/pesanan/:idPesanan`: Dapatkan pesanan berdasarkan ID.
-- `GET /api/pesanan/user/:idPengguna`: Dapatkan pesanan berdasarkan ID pengguna.
-- `POST /api/pesanan/pesan`: Buat pesanan baru.
+- `GET /orders`: Dapatkan semua pesanan.
+- `GET /orders/:orderId`: Dapatkan pesanan berdasarkan ID.
+- `GET /orders/user/:userId`: Dapatkan pesanan berdasarkan ID pengguna.
+- `POST /orders/order`: Buat pesanan baru.
 
 ### **Rute Produk**
 
-- `GET /api/produk`: Dapatkan semua produk.
-- `GET /api/produk/:idProduk`: Dapatkan produk berdasarkan ID.
-- `POST /api/produk`: Buat produk baru.
-- `PUT /api/produk/:idProduk`: Edit produk berdasarkan ID.
-- `DELETE /api/produk/kategori/:kategori`: Dapatkan produk berdasarkan kategori.
-- `DELETE /api/produk/:idProduk`: Hapus produk berdasarkan ID.
+- `GET /products`: Dapatkan semua produk.
+- `GET /products/:idProduk`: Dapatkan produk berdasarkan ID.
+- `POST /products`: Buat produk baru.
+- `PUT /products/:idProduk`: Edit produk berdasarkan ID.
+- `DELETE /products/kategori/:kategori`: Dapatkan produk berdasarkan kategori.
+- `DELETE /products/:idProduk`: Hapus produk berdasarkan ID.
 
 ### **Rute Pengguna**
 
-- `GET /api/pengguna`: Dapatkan semua pengguna.
-- `GET /api/pengguna/:idPengguna`: Dapatkan pengguna berdasarkan ID.
-- `POST /api/pengguna/daftar`: Daftarkan pengguna baru.
-- `POST /api/pengguna/login`: Login pengguna.
-- `PUT /api/pengguna/:idPengguna`: Edit pengguna berdasarkan ID.
-- `GET /api/pengguna/keranjang/:idPengguna`: Dapatkan keranjang pengguna.
-- `PUT /api/pengguna/keranjang/:idPengguna`: Tambahkan produk ke keranjang pengguna.
-- `DELETE /api/pengguna/keranjang/:idPengguna/:idProduk`: Hapus produk dari keranjang pengguna.
-- `POST /api/pengguna/checkout/:idPengguna`: Checkout pengguna.
+- `GET /users`: Dapatkan semua pengguna.
+- `GET /users/:idPengguna`: Dapatkan pengguna berdasarkan ID.
+- `POST /users/daftar`: Daftarkan pengguna baru.
+- `POST /users/login`: Login pengguna.
+- `PUT /users/:idPengguna`: Edit pengguna berdasarkan ID.
+- `GET /users/keranjang/:idPengguna`: Dapatkan keranjang pengguna.
+- `PUT /users/keranjang/:idPengguna`: Tambahkan produk ke keranjang pengguna.
+- `DELETE /users/keranjang/:idPengguna/:idProduk`: Hapus produk dari keranjang pengguna.
+- `POST /users/checkout/:idPengguna`: Checkout pengguna.
 
 ### Catatan:
 
