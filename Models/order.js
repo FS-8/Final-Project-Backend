@@ -10,16 +10,13 @@ const orderSchema = new mongoose.Schema({
         required: true,
       },
       quantity: { type: Number, default: 1 },
+      price: { type: Number },
       selectedColor: { type: String }, // Tambahkan properti pemilihan warna
       selectedSize: { type: String }, // Tambahkan properti pemilihan ukuran
+      selectedSize: { type: String }, // Tambahkan properti pemilihan ukuran
+      paymentMethod: { type: String }, // Tambahkan properti pemilihan ukuran
     },
   ],
-  country: { type: String },
-  phone: { type: String },
-  address: { type: String },
-  kodePos: { type: String },
-  email: { type: String },
-  paymentMethod: { type: String },
   // tambahkan properti lain sesuai kebutuhan
 });
 

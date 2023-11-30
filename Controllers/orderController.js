@@ -39,4 +39,30 @@ module.exports = {
       res.status(500).json({ error: "Internal Server Error" });
     }
   },
+  createOrder: async (req, res) => {
+    try {
+      const { userId, products } = req.body;
+
+      // Pastikan userId dan products tersedia dalam request body
+      if (!userId || !products || products.length === 0) {
+        return res.status(400).json({ message: "Invalid request body" });
+      }
+
+      // Buat objek order baru
+      const newOrder = new Order({
+        user: userId,
+        products,
+      });
+
+      // Simpan order ke database
+      await newOrder.save();
+
+      return res
+        .status(201)
+        .json({ message: "Order created successfully", order: newOrder });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
 };

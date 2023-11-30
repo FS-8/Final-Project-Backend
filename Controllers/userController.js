@@ -7,15 +7,31 @@ const bcrypt = require("bcrypt");
 module.exports = {
   register: async (req, res) => {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, country, phone, city, address, kodePos } =
+        req.body;
+
+      // Hash password menggunakan bcrypt
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await User.create({ name, email, password: hashedPassword });
-      res.status(200).json({
-        message: "Berhasil membuat data user",
-        user,
+
+      // Buat objek user baru dengan password yang sudah di-hash
+      const newUser = new User({
+        name,
+        email,
+        password: hashedPassword,
+        country,
+        phone,
+        city,
+        address,
+        kodePos,
       });
+
+      // Simpan user ke database
+      await newUser.save();
+
+      res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
   },
   login: async (req, res) => {
@@ -74,26 +90,33 @@ module.exports = {
     }
   },
   editUser: async (req, res) => {
-    const { id } = req.params.userId;
-    const { name, email, password } = req.body;
     try {
-      const updateFields = { name, email };
-      if (password) {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        updateFields.password = hashedPassword;
+      const userId = req.params.id; // Ambil ID user dari parameter URL
+      const updatedUserData = req.body;
+
+      // Hash password jika ada perubahan password
+      if (updatedUserData.password) {
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          10
+        );
       }
-      const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
-        new: true,
-      });
-      if (updatedUser) {
-        res
-          .status(200)
-          .json({ message: "User updated successfully", data: updatedUser });
-      } else {
-        res.status(404).json({ message: "User not found" });
+
+      // Temukan dan update user berdasarkan ID
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        updatedUserData,
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
       }
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
   },
   // Menambah product ke keranjang

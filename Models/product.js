@@ -26,6 +26,9 @@ const productSchema = mongoose.Schema({
   brand: {
     type: String,
   },
+  gender: {
+    type: String,
+  },
   colors: [
     {
       type: String,

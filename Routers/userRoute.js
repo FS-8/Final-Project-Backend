@@ -19,7 +19,7 @@ route.get("/:userId", getUserById);
 route.post("/register", register);
 route.post("/login", login);
 
-route.post("/:userId", editUser);
+route.put("/:userId", editUser);
 
 route.post("/cart", verifyToken, addProductToCart);
 route.get("/cart/:userId", getListCart);
