@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 
-const DB_URL = "mongodb+srv://agaam:agaam@atlascluster.0mt5lxe.mongodb.net/Final_Project";
+const DB_URL = process.env.DB_URL;
 
 const db = mongoose.connect(DB_URL);
 

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const User = require("../Models/user");
 const Product = require("../Models/product");
 const Order = require("../Models/order");
@@ -47,7 +48,7 @@ module.exports = {
         if (passwordMatch) {
           const token = jwt.sign(
             { id: user._id, email: user.email },
-            "domainExpansion"
+            process.env.JWT_KEY
           );
           res.status(200).json({
             message: "Login Successfully",
