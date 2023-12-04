@@ -3,10 +3,7 @@ const {
   register,
   login,
   editUser,
-  addProductToCart,
   getListCart,
-  deleteProductFromCart,
-  userCheckout,
   getAllUser,
   getUserById,
 } = require("../Controllers/userController");

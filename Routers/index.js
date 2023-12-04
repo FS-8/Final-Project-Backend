@@ -4,6 +4,7 @@ const route = express.Router();
 const userRoute = require("./userRoute");
 const orderRoute = require("./orderRoute");
 const productRoute = require("./productRoute");
+const cartRoute = require("./cartRoute");
 
 // route default
 route.get("/", (req, res) => {
@@ -13,5 +14,6 @@ route.get("/", (req, res) => {
 route.use("/users", userRoute);
 route.use("/products", productRoute);
 route.use("/orders", orderRoute);
+route.use("/carts", cartRoute);
 
 module.exports = route;
