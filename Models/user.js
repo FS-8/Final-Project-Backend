@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   city: { type: String },
   address: { type: String },
   kodePos: { type: String },
+  role: { type: String, default: "user" },
   // tambahkan properti lain sesuai kebutuhan
 });
 const User = mongoose.model("User", userSchema);
